@@ -1,0 +1,331 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   MAISON NOIR — DESIGN SYSTEM  (WellFood-inspired: black · flame · amber)
+   Tailwind v4 CSS-first theme. Every token used across the site lives here.
+   ========================================================================== */
+
+@theme {
+  /* Surfaces — near-black, warm rather than blue */
+  --color-obsidian: #0b0b0c;
+  --color-charcoal: #121214;
+  --color-elevated: #1a1a1d;
+  --color-graphite: #242429;
+  --color-hairline: #2e2e34;
+
+  /* Accent — flame orange, with amber as the secondary */
+  --color-gold: #f0501e; /* primary — "flame" */
+  --color-gold-light: #f2a93b; /* secondary — "amber" */
+  --color-gold-deep: #c03d14;
+
+  /* Type */
+  --color-bone: #ffffff;
+  --color-muted: #b0b0b6;
+  --color-faint: #78787f;
+
+  /* Semantic */
+  --color-success: #3f9d5c;
+  --color-danger: #d32f2f;
+
+  /* Condensed grotesque for headings, clean sans for everything else */
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Sharp, product-forward corners */
+  --radius-card: 8px;
+  --radius-modal: 10px;
+  --radius-input: 4px;
+
+  --shadow-lux: 0 24px 70px -20px rgb(0 0 0 / 0.8);
+  --shadow-gold: 0 16px 44px -16px rgb(240 80 30 / 0.55);
+
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --breakpoint-xs: 25rem; /* 400px */
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  * {
+    border-color: var(--color-hairline);
+    min-width: 0;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-obsidian);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.75;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Headings are heavy, condensed and uppercase — the signature of the look. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: normal; /* Oswald has no true italic — never fake one */
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-bone);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-obsidian);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-graphite);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ---------- Component primitives ---------- */
+@layer components {
+  /* The small flame-orange label above every section title */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .glass {
+    background: color-mix(in srgb, var(--color-charcoal) 62%, transparent);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--color-bone) 8%, transparent);
+  }
+
+  .glass-strong {
+    background: color-mix(in srgb, var(--color-obsidian) 88%, transparent);
+    backdrop-filter: blur(26px) saturate(150%);
+    -webkit-backdrop-filter: blur(26px) saturate(150%);
+    border: 1px solid color-mix(in srgb, var(--color-bone) 10%, transparent);
+  }
+
+  /* Flame gradient for numerals and display accents */
+  .text-gilded {
+    background: linear-gradient(
+      100deg,
+      var(--color-gold-light) 0%,
+      var(--color-gold) 55%,
+      var(--color-gold-deep) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rule-gold {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-gold),
+      var(--color-gold-light),
+      var(--color-gold),
+      transparent
+    );
+  }
+
+  /* Consistent page gutter at every breakpoint (320 → 1920) */
+  .shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 90rem;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .shell {
+      padding-inline: 3.5rem;
+    }
+  }
+  @media (min-width: 1536px) {
+    .shell {
+      padding-inline: 5rem;
+    }
+  }
+
+  .section {
+    padding-block: 5rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 7rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .section {
+      padding-block: 8.5rem;
+    }
+  }
+
+  /* Animated underline for nav links */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 2px;
+    width: 100%;
+    background: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease-lux);
+  }
+  .nav-link:hover::after,
+  .nav-link[data-active='true']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* The starburst price / discount tag — the theme's loudest motif */
+  .starburst {
+    background: var(--color-danger);
+    color: var(--color-bone);
+    clip-path: polygon(
+      50% 0%, 60% 8%, 72% 3%, 77% 15%, 90% 14%, 90% 27%, 100% 33%,
+      94% 45%, 100% 57%, 90% 65%, 92% 78%, 79% 80%, 74% 92%, 62% 88%,
+      50% 100%, 38% 88%, 26% 92%, 21% 80%, 8% 78%, 10% 65%, 0% 57%,
+      6% 45%, 0% 33%, 10% 27%, 10% 14%, 23% 15%, 28% 3%, 40% 8%
+    );
+  }
+
+  .starburst-amber {
+    background: var(--color-gold-light);
+    color: var(--color-obsidian);
+  }
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-elevated);
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-bone) 6%, transparent),
+      transparent
+    );
+    animation: shimmer 1.6s infinite;
+  }
+}
+
+@layer utilities {
+  /* The speckled black used behind the hero and dark bands */
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Ghost word set behind a section title, as in the reference */
+  .ghost-word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-bone) 7%, transparent);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ---------- Swiper overrides ---------- */
+.swiper-pagination-bullet {
+  background: var(--color-faint);
+  opacity: 1;
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+  transition: all 0.4s var(--ease-lux);
+}
+.swiper-pagination-bullet-active {
+  background: var(--color-gold);
+  width: 28px;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
