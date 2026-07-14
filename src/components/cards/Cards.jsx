@@ -12,7 +12,7 @@ import { Badge, Rating } from '@/components/ui/Misc';
 import { formatPrice, cx } from '@/utils';
 import { fadeUp } from '@/animations/variants';
 
-/* ------------------------------------------------------------- ReviewCard */
+
 
 export function ReviewCard({ review, className }) {
   return (
