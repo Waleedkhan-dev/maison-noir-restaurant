@@ -8,10 +8,6 @@ import { useCart } from '@/store/useCart';
 import { formatPrice, cx } from '@/utils';
 import { fadeUp } from '@/animations/variants';
 
-/**
- * The card the whole menu is built from. Tilts in 3D toward the cursor, lifts
- * on hover, and opens the detail modal on click.
- */
 export default function DishCard({ dish, onOpen, index = 0 }) {
   const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt(7);
   const add = useCart((s) => s.add);
