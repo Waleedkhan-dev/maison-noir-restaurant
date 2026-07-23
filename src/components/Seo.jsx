@@ -5,10 +5,7 @@ import { SITE } from '@/constants';
 const OG_IMAGE =
   'https://images.unsplash.com/photo-1778731525602-dc44818f0e5e?auto=format&fit=crop&w=1200&q=75';
 
-/**
- * Per-page head. Also emits the Restaurant schema on the home page and a
- * BreadcrumbList everywhere else.
- */
+
 export default function Seo({
   title,
   description = SITE.description,
