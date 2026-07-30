@@ -12,7 +12,7 @@ export default function DishCard({ dish, onOpen, index = 0 }) {
   const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt(7);
   const add = useCart((s) => s.add);
   const isChefsChoice = dish.tags.includes('chef');
-
+//  const isBestSeller = dish.tags.includes('best-seller');
   return (
     <motion.article
       variants={fadeUp}
@@ -35,6 +35,7 @@ export default function DishCard({ dish, onOpen, index = 0 }) {
             : 'border-hairline hover:border-gold/40'
         )}
       >
+      
         {/* Image */}
         <button
           type="button"
